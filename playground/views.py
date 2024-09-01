@@ -5,4 +5,4 @@ from django.http import HttpResponse
 
 
 def say_hello(request):
-    return HttpResponse("Hello World".encode("utf-8"))
+    return render(request, "hello.html")
