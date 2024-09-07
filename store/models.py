@@ -30,3 +30,18 @@ class Customer(models.Model):
     membership = models.CharField(
         max_length=1, choices=MEMBERSHIP_CHOICES, default="MEMBERSHIP_BRONZE"
     )
+
+
+class Order(models.Model):
+    PENDING = "P"
+    COMPLETE = "C"
+    FAILED = "F"
+    PAYMENT_CHOICES_STATUS = [
+        (PENDING, "pending"),
+        (COMPLETE, "complete"),
+        (FAILED, "failed"),
+    ]
+    placed_at = models.DateTimeField(auto_now_add=True)
+    payment_status = models.CharField(
+        max_length=1, choices=PAYMENT_CHOICES_STATUS, PENDING="P"
+    )
