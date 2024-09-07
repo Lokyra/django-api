@@ -45,3 +45,11 @@ class Order(models.Model):
     payment_status = models.CharField(
         max_length=1, choices=PAYMENT_CHOICES_STATUS, PENDING="P"
     )
+
+
+class Address(models.Model):
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    customer = models.OneToOneField(
+        Customer, primary_key=True, on_delete=models.CASCADE
+    )
