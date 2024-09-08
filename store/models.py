@@ -11,12 +11,15 @@ class Promotion(models.Model):
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+    featured_product = models.ForeignKey(
+        "Product", on_delete=models.SET_NULL, null=True, related_name="+"
+    )
 
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
@@ -36,7 +39,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=255)
     second_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone = models.IntegerField(max_length=255)
+    phone = models.IntegerField()
     birth_rate = models.DateField(null=True)
     membership = models.CharField(
         max_length=1, choices=MEMBERSHIP_CHOICES, default="MEMBERSHIP_BRONZE"
@@ -54,7 +57,7 @@ class Order(models.Model):
     ]
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(
-        max_length=1, choices=PAYMENT_CHOICES_STATUS, PENDING="P"
+        max_length=1, choices=PAYMENT_CHOICES_STATUS, default=PENDING
     )
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
