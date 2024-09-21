@@ -1,8 +1,13 @@
 from django.shortcuts import render
-from store.models import Order, OrderItem, Product, Customer
+from store.models import Product
 
 # Create your views here.
 
 
 def say_hello(request):
-    pass
+    query_set = Product._default_manager.all()
+
+    for product in query_set:
+        print(product)
+
+    return render(request, "hello.html", {"name": "Lokyra"})
